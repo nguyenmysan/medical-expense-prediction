@@ -42,10 +42,10 @@ medical-expense-prediction/
 
 - **`data/`** – Contains the dataset used for the medical expense prediction analysis.
 - **`linear-regression/`** – Contains files related to the original linear regression implementation.
-- **`reports/assignment_results.csv`** – Contains the model coefficients and evaluation metrics for all three models.
+- **`reports/assignment_results.csv`** – Contains the model coefficients and evaluation metrics for the three models.
 - **`two_feature.py`** – Main Python script that implements and evaluates the BMI-only and BMI + age linear regression models.
 - **`memo.md`** – Written memo summarizing the methodology, results, and key findings.
-- **`README.md`** – Provides an overview of the project, methodology, execution instructions, and results.
+- **`README.md`** – Provides an overview of the project, methodology, instructions, and results.
 - **`.gitignore`** – Specifies files and folders that Git should ignore.
 
 ---
@@ -125,8 +125,6 @@ Lower MSE, RMSE, and MAE values indicate better prediction performance, while a 
 ## How to Run
 
 ### 1. Clone the Repository
-
-Open Terminal and run:
 
 ```bash
 git clone https://github.com/nguyenmysan/medical-expense-prediction.git
