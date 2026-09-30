@@ -1,6 +1,6 @@
 # Medical Expense Prediction Using BMI and Age
 
-### MSBA 265 – Module 2: Linear Regression Assignment
+### MSBA 265 – Linear Regression Project
 
 ## Project Overview
 
@@ -17,11 +17,44 @@ The two-feature models are compared with the BMI-only baseline using MSE, RMSE, 
 
 ---
 
+## Project Structure
+
+```text
+medical-expense-prediction/
+│
+├── data/
+│   └── insurance-premium-prediction/
+│       └── [dataset files]
+│
+├── linear-regression/
+│   └── [linear regression files]
+│
+├── reports/
+│   └── assignment_results.csv
+│
+├── memo.md
+├── two_feature.py
+├── README.md
+└── .gitignore
+```
+
+### File Descriptions
+
+- **`data/`** – Contains the dataset used for the medical expense prediction analysis.
+- **`linear-regression/`** – Contains files related to the original linear regression implementation.
+- **`reports/assignment_results.csv`** – Contains the model coefficients and evaluation metrics for all three models.
+- **`two_feature.py`** – Main Python script that implements and evaluates the BMI-only and BMI + age linear regression models.
+- **`memo.md`** – Written memo summarizing the methodology, results, and key findings.
+- **`README.md`** – Provides an overview of the project, methodology, execution instructions, and results.
+- **`.gitignore`** – Specifies files and folders that Git should ignore.
+
+---
+
 ## Dataset
 
 The dataset contains **1,338 observations** with information about individuals and their medical expenses.
 
-The variables used in this project are:
+The main variables used in this project are:
 
 - **BMI** – Body Mass Index
 - **Age** – Age of the individual
@@ -66,13 +99,13 @@ For the two-feature model:
 Medical Charges = w0 + w1(BMI) + w2(Age)
 ```
 
-This method does not require iterative optimization.
+This analytical method calculates the model parameters directly without requiring iterative optimization.
 
 ### Gradient Descent
 
 Gradient Descent estimates the model parameters by repeatedly updating the coefficients to minimize prediction error.
 
-BMI and age are standardized during the optimization process to improve convergence. The final coefficients are converted back to the original feature scale so they can be compared directly with the Normal Equation results.
+BMI and age are standardized during optimization to improve convergence. The final coefficients are converted back to the original feature scale so they can be directly compared with the Normal Equation results.
 
 ---
 
@@ -97,6 +130,11 @@ Open Terminal and run:
 
 ```bash
 git clone https://github.com/nguyenmysan/medical-expense-prediction.git
+```
+
+Move into the project directory:
+
+```bash
 cd medical-expense-prediction
 ```
 
@@ -113,7 +151,13 @@ pip install numpy pandas scikit-learn
 Run the main Python script from the project root directory:
 
 ```bash
-python src/linear_regression.py
+python two_feature.py
+```
+
+If your system uses `python3`, run:
+
+```bash
+python3 two_feature.py
 ```
 
 The script will:
@@ -156,32 +200,35 @@ The BMI-only baseline produces an R² of approximately **0.0394**.
 
 After adding age, the R² increases to approximately **0.1173** for both the Normal Equation and Gradient Descent models.
 
-The prediction errors also decrease:
+Prediction errors also decrease:
 
-- RMSE decreases from approximately **11,864.41** to **11,373.64**
-- MAE decreases from approximately **9,172.30** to **9,032.28**
-- MSE decreases from approximately **140.76 million** to **129.36 million**
+- **MSE:** 140.76 million → 129.36 million
+- **RMSE:** 11,864.41 → 11,373.64
+- **MAE:** 9,172.30 → 9,032.28
+- **R²:** 0.0394 → 0.1173
 
 These results show that adding age improves the model compared with using BMI alone.
 
-The Normal Equation and Gradient Descent also produce nearly identical coefficients and evaluation metrics, demonstrating that Gradient Descent successfully converges to the same solution as the analytical method.
+The Normal Equation and Gradient Descent produce nearly identical coefficients and evaluation metrics. This demonstrates that Gradient Descent successfully converges to approximately the same solution as the analytical Normal Equation.
 
 ---
 
 ## Model Coefficients
 
-For the BMI + age model, the estimated equation is approximately:
+For the BMI + age model, the estimated regression equation is:
 
 ```text
 Predicted Medical Charges
 = -6437.35 + 333.39(BMI) + 241.90(Age)
 ```
 
+### Interpretation
+
 Holding age constant, a one-unit increase in BMI is associated with an increase of approximately **$333.39** in predicted medical charges.
 
 Holding BMI constant, a one-year increase in age is associated with an increase of approximately **$241.90** in predicted medical charges.
 
-These coefficients describe associations within this linear model and should not be interpreted as causal effects.
+These coefficients represent associations within the linear regression model and should not be interpreted as causal effects.
 
 ---
 
@@ -189,7 +236,7 @@ These coefficients describe associations within this linear model and should not
 
 Adding **age** to the BMI-only model improves prediction performance.
 
-The increase in R² from **0.0394 to 0.1173** indicates that BMI and age together explain more variation in medical expenses than BMI alone.
+The R² increases from approximately **0.0394 to 0.1173**, while MSE, RMSE, and MAE decrease. This indicates that BMI and age together provide more predictive information than BMI alone.
 
-However, the R² remains relatively low, suggesting that BMI and age alone cannot explain most of the variation in medical expenses. Additional variables would likely be necessary to build a more accurate prediction model.
+However, the R² remains relatively low, suggesting that BMI and age explain only a limited portion of the variation in medical expenses. Additional variables would likely be necessary to build a more accurate prediction model.
 
