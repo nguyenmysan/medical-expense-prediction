@@ -114,39 +114,59 @@ git clone https://github.com/nguyenmysan/medical-expense-prediction.git
 cd medical-expense-prediction
 ```
 
-### 2. Install NumPy
+### 2. Create a Virtual Environment
 
 **macOS:**
 
 ```bash
-python3 -m pip install numpy
+python3 -m venv .venv
 ```
 
 **Windows:**
 
 ```bat
-py -m pip install numpy
+py -3 -m venv .venv
 ```
 
-### 3. Run the Model
-
-Run the script from the project root directory.
-
-**macOS:**
-
-```bash
-python3 two_feature.py
-```
-
-**Windows:**
+If Windows does not recognize `py`, use the following command, provided `python` runs Python 3:
 
 ```bat
-py two_feature.py
+python -m venv .venv
 ```
 
-If Windows does not recognize `py`, replace it with `python` in both commands, provided `python` runs Python 3.
+### 3. Activate the Virtual Environment
 
-### 4. View the Results
+**macOS — Terminal:**
+
+```bash
+source .venv/bin/activate
+```
+
+**Windows — Command Prompt:**
+
+```bat
+.venv\Scripts\activate.bat
+```
+
+After activation, you should see `(.venv)` at the beginning of your terminal prompt.
+
+### 4. Install NumPy
+
+Use the same command on both macOS and Windows:
+
+```bash
+python -m pip install numpy
+```
+
+### 5. Run the Model
+
+From the project root directory, use the same command on both systems:
+
+```bash
+python two_feature.py
+```
+
+### 6. View the Results
 
 The script will:
 
@@ -158,6 +178,16 @@ The script will:
 - Save the results to `reports/assignment_results.csv`.
 
 The script creates the `reports/` folder if needed and overwrites the results CSV when run again.
+
+### 7. Deactivate the Virtual Environment
+
+When finished, run:
+
+```bash
+deactivate
+```
+
+For future runs, open the project directory, activate the existing `.venv`, and run `python two_feature.py`. You do not need to recreate the environment or reinstall NumPy.
 
 ## Results
 
