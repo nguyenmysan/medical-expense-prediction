@@ -1,221 +1,195 @@
-# Insurance Expense Prediction Using BMI and Age
+# Medical Expense Prediction Using BMI and Age
 
 ### MSBA 265 – Module 2: Linear Regression Assignment
 
 ## Project Overview
 
-This project examines how BMI and age can be used to predict insurance expenses through linear regression. It extends a model that uses only BMI by including age as an additional feature to explore whether the second variable improves prediction performance.
+This project examines how **BMI and age** can be used to predict **medical expenses** using linear regression.
+
+The project begins with a baseline model that uses only BMI as a predictor. Age is then added as a second feature to determine whether including additional information improves prediction performance.
 
 Two methods are used to train the two-feature model:
 
-- Normal Equation (analytical solution)
-- Gradient Descent (iterative optimization)
+- **Normal Equation** – calculates the regression coefficients analytically
+- **Gradient Descent** – iteratively updates the model parameters to minimize prediction error
 
-The project compares both methods with a BMI-only baseline and evaluates their performance using MSE, RMSE, MAE, and R².
+The two-feature models are compared with the BMI-only baseline using MSE, RMSE, MAE, and R².
 
-## What This Repository Contains
+---
 
-This repository includes:
+## Dataset
 
-- A Python script implementing linear regression with BMI and age
-- An insurance dataset containing 1,338 observations
-- A CSV file containing model weights and evaluation metrics
-- A written memo explaining the results and business implications
+The dataset contains **1,338 observations** with information about individuals and their medical expenses.
+
+The variables used in this project are:
+
+- **BMI** – Body Mass Index
+- **Age** – Age of the individual
+- **Charges** – Medical expenses and the target variable
+
+The goal is to predict medical charges using BMI and age.
+
+---
 
 ## Project Objectives
 
-The objectives of this assignment are to:
+The main objectives of this project are to:
 
-1. Load and prepare insurance data for regression analysis.
-2. Build a linear regression model using BMI and age.
-3. Implement the Normal Equation using a general matrix solver.
-4. Train the same model using Gradient Descent with standardized features.
-5. Convert the Gradient Descent weights back to their original units.
-6. Evaluate model performance using MSE, RMSE, MAE, and R².
-7. Compare the two-feature models with a BMI-only baseline.
-8. Interpret the results and discuss whether the model is suitable for deployment.
+1. Build a baseline linear regression model using BMI.
+2. Add age as a second feature.
+3. Implement the two-feature model using the Normal Equation.
+4. Implement the same model using Gradient Descent.
+5. Compare the results of the two training methods.
+6. Evaluate whether adding age improves prediction performance.
 
-## Repository Structure
+---
+
+## Methods
+
+### BMI-Only Baseline
+
+The baseline model uses BMI as the only predictor:
 
 ```text
-MSBA265_Module2_NguyenMy/
-│
-├── README.md
-├── assignment_two_feature_nguyenmy.py
-├── assignment_memo.md
-│
-├── data/
-│   └── insurance-premium-prediction/
-│       └── insurance.csv
-│
-└── reports/
-    └── assignment_results.csv
+Medical Charges = w0 + w1(BMI)
 ```
 
-## Prerequisites
+This model provides a reference point for evaluating whether adding age improves prediction performance.
 
-Before running the project, make sure you have:
+### Normal Equation
 
-- Python 3.10 or newer
-- Git
-- Internet access for cloning the repository and installing dependencies
+The Normal Equation calculates the optimal regression coefficients directly using matrix operations.
 
-## 1. Clone the Repository
+For the two-feature model:
 
-Open a terminal and run:
+```text
+Medical Charges = w0 + w1(BMI) + w2(Age)
+```
+
+This method does not require iterative optimization.
+
+### Gradient Descent
+
+Gradient Descent estimates the model parameters by repeatedly updating the coefficients to minimize prediction error.
+
+BMI and age are standardized during the optimization process to improve convergence. The final coefficients are converted back to the original feature scale so they can be compared directly with the Normal Equation results.
+
+---
+
+## Model Evaluation
+
+The models are evaluated using four regression metrics:
+
+- **MSE (Mean Squared Error)** – measures the average squared prediction error
+- **RMSE (Root Mean Squared Error)** – measures prediction error in the same unit as medical charges
+- **MAE (Mean Absolute Error)** – measures the average absolute difference between predicted and actual charges
+- **R² (Coefficient of Determination)** – measures the proportion of variation in medical charges explained by the model
+
+Lower MSE, RMSE, and MAE values indicate better prediction performance, while a higher R² indicates that the model explains more variation in the target variable.
+
+---
+
+## How to Run
+
+### 1. Clone the Repository
+
+Open Terminal and run:
 
 ```bash
-git clone https://github.com/nguyenmysan/MSBA265_Module2_NguyenMy.git
-cd MSBA265_Module2_NguyenMy
+git clone https://github.com/nguyenmysan/medical-expense-prediction.git
+cd medical-expense-prediction
 ```
 
-## 2. Create and Activate a Virtual Environment
+### 2. Install Required Packages
 
-### Windows (PowerShell)
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
-
-If script execution is blocked, run:
-
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
-```
-
-### macOS (Terminal or zsh)
+Install the required Python libraries:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+pip install numpy pandas scikit-learn
 ```
 
-## 3. Install Dependencies
+### 3. Run the Model
 
-This project requires NumPy for numerical calculations and matrix operations.
-
-### Windows
-
-```powershell
-python -m pip install --upgrade pip
-python -m pip install numpy
-```
-
-### macOS
+Run the main Python script from the project root directory:
 
 ```bash
-python3 -m pip install --upgrade pip
-python3 -m pip install numpy
+python src/linear_regression.py
 ```
 
-## 4. Run the Python Script
+The script will:
 
-Make sure you are in the repository's root directory.
+- Load the medical expense dataset
+- Prepare BMI and age as model features
+- Split the data into training and testing sets
+- Train the BMI-only baseline model
+- Train the BMI + age model using the Normal Equation
+- Train the BMI + age model using Gradient Descent
+- Generate predictions
+- Calculate MSE, RMSE, MAE, and R²
+- Save the model results for comparison
 
-### Windows
+---
 
-```powershell
-python assignment_two_feature_nguyenmy.py
+## Expected Output
+
+After running the model, the results should be approximately:
+
+| Model | w0 | w1 (BMI) | w2 (Age) | MSE | RMSE | MAE | R² |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| BMI-only Baseline | 1178.18 | 394.33 | 0.00 | 140,764,214.67 | 11,864.41 | 9,172.30 | 0.0394 |
+| Normal Equation (BMI + Age) | -6437.35 | 333.39 | 241.90 | 129,359,773.29 | 11,373.64 | 9,032.28 | 0.1173 |
+| Gradient Descent (BMI + Age) | -6437.35 | 333.39 | 241.90 | 129,359,773.29 | 11,373.64 | 9,032.28 | 0.1173 |
+
+The complete results with full numerical precision are saved in:
+
+```text
+reports/assignment_results.csv
 ```
 
-### macOS
+Small differences in displayed decimal places may occur depending on formatting.
 
-```bash
-python3 assignment_two_feature_nguyenmy.py
+---
+
+## Results
+
+The BMI-only baseline produces an R² of approximately **0.0394**.
+
+After adding age, the R² increases to approximately **0.1173** for both the Normal Equation and Gradient Descent models.
+
+The prediction errors also decrease:
+
+- RMSE decreases from approximately **11,864.41** to **11,373.64**
+- MAE decreases from approximately **9,172.30** to **9,032.28**
+- MSE decreases from approximately **140.76 million** to **129.36 million**
+
+These results show that adding age improves the model compared with using BMI alone.
+
+The Normal Equation and Gradient Descent also produce nearly identical coefficients and evaluation metrics, demonstrating that Gradient Descent successfully converges to the same solution as the analytical method.
+
+---
+
+## Model Coefficients
+
+For the BMI + age model, the estimated equation is approximately:
+
+```text
+Predicted Medical Charges
+= -6437.35 + 333.39(BMI) + 241.90(Age)
 ```
 
-The script performs the following steps:
+Holding age constant, a one-unit increase in BMI is associated with an increase of approximately **$333.39** in predicted medical charges.
 
-1. Loads BMI, age, and expenses from the insurance dataset.
-2. Fits a two-feature linear regression model using the Normal Equation.
-3. Standardizes BMI and age before training with Gradient Descent.
-4. Converts the Gradient Descent weights back to their original units.
-5. Calculates MSE, RMSE, MAE, and R² for both methods.
-6. Fits a BMI-only baseline model for comparison.
-7. Prints a comparison table and exports the results to `reports/assignment_results.csv`.
+Holding BMI constant, a one-year increase in age is associated with an increase of approximately **$241.90** in predicted medical charges.
 
-## 5. Model Results
+These coefficients describe associations within this linear model and should not be interpreted as causal effects.
 
-### Model Comparison
+---
 
-| Model | R² | RMSE |
-|---|---:|---:|
-| BMI-only Baseline | 0.0394 | 11,864.41 |
-| Normal Equation (BMI + Age) | 0.1173 | 11,373.64 |
-| Gradient Descent (BMI + Age) | 0.1173 | 11,373.64 |
+## Key Takeaway
 
-Adding age improved R² by approximately 0.0778, or 7.78 percentage points.
+Adding **age** to the BMI-only model improves prediction performance.
 
-Both the Normal Equation and Gradient Descent produced nearly identical model weights.
+The increase in R² from **0.0394 to 0.1173** indicates that BMI and age together explain more variation in medical expenses than BMI alone.
 
-### Two-Feature Model Weights
+However, the R² remains relatively low, suggesting that BMI and age alone cannot explain most of the variation in medical expenses. Additional variables would likely be necessary to build a more accurate prediction model.
 
-| Parameter | Value |
-|---|---:|
-| Intercept (w0) | -6437.35 |
-| BMI coefficient (w1) | 333.39 |
-| Age coefficient (w2) | 241.90 |
-
-The positive age coefficient indicates that predicted insurance expenses increase by approximately $241.90 for each additional year of age when BMI remains constant.
-
-Although adding age improves the model's performance, the two-feature model explains only about 11.73% of the variation in insurance expenses.
-
-## 6. Review the Exported Results
-
-After running the Python script, open:
-
-`reports/assignment_results.csv`
-
-The CSV file contains the model weights and evaluation metrics for all three models.
-
-## 7. Written Memo
-
-The file `assignment_memo.md` provides a short discussion of the model results.
-
-The memo addresses four questions:
-
-1. How much did adding age improve R²?
-2. Why do the Normal Equation and Gradient Descent produce similar weights?
-3. What does the age coefficient mean for a non-technical stakeholder?
-4. Is the two-feature model suitable for deployment?
-
-## Troubleshooting
-
-### ModuleNotFoundError: No module named 'numpy'
-
-Make sure the virtual environment is activated and install NumPy:
-
-```bash
-python -m pip install numpy
-```
-
-### FileNotFoundError: insurance.csv
-
-Make sure the dataset is located at:
-
-`data/insurance-premium-prediction/insurance.csv`
-
-The dataset must remain in this location for the Python script to run correctly.
-
-### Wrong Python Interpreter in VS Code
-
-Open the Command Palette and select:
-
-`Python: Select Interpreter`
-
-Choose the Python interpreter from the `.venv` environment.
-
-## Dataset and Acknowledgment
-
-- Dataset source: Kaggle Insurance Premium Prediction Dataset.
-- This assignment builds on the Module 2 Linear Regression Learning Lab materials provided by Professor Shyla Solis.
-
-## Author
-
-Nguyen My San
-
-Master of Science in Business Analytics
-
-University of the Pacific
