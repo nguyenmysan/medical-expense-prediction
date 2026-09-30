@@ -30,11 +30,13 @@ medical-expense-prediction/
 └── .gitignore
 ```
 
-- `two_feature.py`: Main script for training, evaluating, and comparing the models.
-- `data/insurance-premium-prediction/insurance.csv`: Dataset used by the main script.
-- `reports/assignment_results.csv`: Exported model coefficients and evaluation metrics.
-- `memo.md`: Discussion of the results and limitations.
-- `linear-regression/`: Original lab materials and supporting implementations.
+| File or Folder | Description |
+|---|---|
+| `two_feature.py` | Main script for training, evaluating, and comparing the models |
+| `data/insurance-premium-prediction/insurance.csv` | Dataset used by the main script |
+| `reports/assignment_results.csv` | Exported coefficients and evaluation metrics |
+| `memo.md` | Discussion of the results and limitations |
+| `linear-regression/` | Original lab materials and supporting implementations |
 
 ## Dataset
 
@@ -52,7 +54,7 @@ The main variables used are:
 
 ### BMI-Only Baseline
 
-The baseline model predicts medical expenses using BMI:
+The baseline predicts medical expenses using BMI:
 
 ```text
 Predicted Medical Expenses = w0 + w1(BMI)
@@ -86,7 +88,7 @@ After training, the coefficients are converted back to the original feature unit
 
 The models are trained and evaluated on the **full dataset**. The current script does not split the data into training and testing sets.
 
-The reported metrics describe fit to the observed data, rather than prediction performance on unseen data.
+The reported metrics describe fit to the observed data rather than prediction performance on unseen data.
 
 The evaluation metrics are:
 
@@ -99,41 +101,61 @@ Lower MSE, RMSE, and MAE indicate smaller errors. Higher R² indicates better mo
 
 ## How to Run
 
+These instructions support both **macOS and Windows**. Install Python 3 and Git before starting.
+
+The main script requires **NumPy**. The dataset is included in the repository.
+
 ### 1. Clone the Repository
+
+Open Terminal on macOS or Command Prompt on Windows, then run:
 
 ```bash
 git clone https://github.com/nguyenmysan/medical-expense-prediction.git
 cd medical-expense-prediction
 ```
 
-### 2. Install the Required Package
+### 2. Install NumPy
 
-Python 3 is required. The main script uses NumPy:
+**macOS:**
 
 ```bash
 python3 -m pip install numpy
 ```
 
-### 3. Run the Script
+**Windows:**
 
-From the project root directory, run:
+```bat
+py -m pip install numpy
+```
+
+### 3. Run the Model
+
+Run the script from the project root directory.
+
+**macOS:**
 
 ```bash
 python3 two_feature.py
 ```
 
-If your system uses `python` for Python 3, use `python` instead of `python3` in both commands.
+**Windows:**
+
+```bat
+py two_feature.py
+```
+
+If Windows does not recognize `py`, replace it with `python` in both commands, provided `python` runs Python 3.
 
 ### 4. View the Results
 
 The script will:
 
-- Load the dataset.
+- Load all 1,338 observations.
 - Train the BMI-only baseline.
 - Train the BMI + age model using the Normal Equation.
 - Train the BMI + age model using Gradient Descent.
-- Calculate and display evaluation metrics.
-- Save the comparison results to `reports/assignment_results.csv`.
+- Display the coefficients, evaluation metrics, and comparison table.
+- Save the results to `reports/assignment_results.csv`.
 
 The script creates the `reports/` folder if needed and overwrites the results CSV when run again.
 
